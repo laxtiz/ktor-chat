@@ -1,0 +1,25 @@
+version: "3.4"
+
+services:
+  web:
+    image: docker.io/laxtiz/ktor-chat:latest
+    build:
+      context: .
+    environment:
+      DATABASE_URL: "jdbc:mariadb://db:3306/chat"
+      DATABASE_USER: ktor
+      DATABASE_PASSWORD: chat123
+    ports:
+      - "8080:8080"
+  db:
+    image: mariadb:latest
+    volumes:
+      - data:/lib/mysql
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: 1
+      MARIADB_USER: ktor
+      MARIADB_PASSWORD: chat123
+      MARIADB_DATABASE: chat
+
+volumes:
+  data:
